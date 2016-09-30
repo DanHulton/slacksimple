@@ -1,0 +1,20 @@
+{
+  "name": "slackwrapper",
+  "version": "1.0.0",
+  "description": "Wrapper for Slack library.",
+  "private": true,
+  "main": "slack.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DanHulton/slackwrapper.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DanHulton/slackwrapper/issues"
+  },
+  "homepage": "https://github.com/DanHulton/slackwrapper#readme"
+}
