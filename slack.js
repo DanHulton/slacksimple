@@ -120,6 +120,18 @@ class Slack
 	 *
 	 * @param object message The message to update.
 	 */
+	sendTyping(channel)
+	{
+		if (this.liveFire) {
+			this.rtmClient.sendTyping(channel);
+		}
+	}
+
+	/**
+	 * Update a message that already exists in Slack.
+	 *
+	 * @param object message The message to update.
+	 */
 	updateMessage(message)
 	{
 		if (this.liveFire) {
