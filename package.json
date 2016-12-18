@@ -1,5 +1,5 @@
 {
-  "name": "slackwrapper",
+  "name": "slacksimple",
   "version": "0.1.0",
   "description": "Wrapper for Slack library.",
   "main": "slack.js",
@@ -8,12 +8,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/DanHulton/slackwrapper.git"
+    "url": "git+https://github.com/DanHulton/slacksimple.git"
+  },
+  "dependencies": {
+    "@slack/client": "3.5.4",
+    "bunyan": "1.8.1"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/DanHulton/slackwrapper/issues"
+    "url": "https://github.com/DanHulton/slacksimple/issues"
   },
-  "homepage": "https://github.com/DanHulton/slackwrapper#readme"
+  "homepage": "https://github.com/DanHulton/slacksimple#readme"
 }

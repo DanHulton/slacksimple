@@ -6,27 +6,20 @@ const WebClient = require('@slack/client').WebClient;
 const RTM_EVENTS        = require('@slack/client').RTM_EVENTS;
 const RTM_CLIENT_EVENTS = require('@slack/client').CLIENT_EVENTS.RTM;
 
-const Log = require(`${UTIL_PATH}/log`);
-
-class Slack
+class Slacksimple
 {
 	/**
 	 * Initialize bot.
 	 *
-	 * @param string teamName The name of the team we're connecting to.
-	 * @param string botId    The ID of the connecting bot, used to filter out bot messages from logging.
-	 * @param string botToken The token identifying the connecting bot.
-	 * @param string appToken The token identifying the app admin.
+	 * @param string botToken   The token identifying the connecting bot.
+	 * @param string appToken   The token identifying the app admin.
+	 * @param string loggerName The name of the logger we'll output with.
 	 */
-	constructor(teamName, botId, botToken, appToken)
+	constructor(botToken, appToken, loggerName = 'slack')
 	{
-		this.teamName = teamName;
-		this.botId    = botId;
 		this.botToken = botToken;
 		this.appToken = appToken;
-
-		// If we're not testing, actually send the calls
-		this.liveFire = _.isUndefined(process.env.LOADED_MOCHA_OPTS);
+		this.log      = require('bunyan').createLogger({ name: loggerName });
 	}
 
 	/**
@@ -38,10 +31,8 @@ class Slack
 	 */
 	connect({ onClientPresenceChange, onMessage, bot })
 	{
-		if (this.liveFire) {
-			this._connectRtmClient(this.teamName, this.botToken, onClientPresenceChange, onMessage, bot);
-			this._connectWebClient(this.botToken, this.appToken);
-		}
+		this._connectRtmClient(this.teamName, this.botToken, onClientPresenceChange, onMessage, bot);
+		this._connectWebClient(this.botToken, this.appToken);
 	}
 
 	/**
@@ -57,13 +48,13 @@ class Slack
 	 */
 	_connectRtmClient(teamName, botToken, onClientPresenceChange, onMessage, bot)
 	{
-		Log.info(`Connecting to '${teamName}'...`);
+		this.log.info('Connecting to Slack...');
 
 		this.rtmClient = new RtmClient(botToken, { logLevel: process.env.RTM_LOG_LEVEL });
 		this.rtmClient.start();
 
 		this.rtmClient.on(RTM_CLIENT_EVENTS.AUTHENTICATED, (rtmStartData) => {
-			this._connected(teamName);
+			this.log.info('Connected to Slack.');
 		});
 
 		if ( ! _.isUndefined(onClientPresenceChange)) {
@@ -90,18 +81,6 @@ class Slack
 	}
 
 	/**
-	 * Called when connected.
-	 *
-	 * @param string name The name of the server connected to.
-	 *
-	 * @return void
-	 */
-	_connected(name)
-	{
-		Log.info(`Connected to '${name}'.`);
-	}
-
-	/**
 	 * Post a message to a channel.
 	 *
 	 * @param string channel The channel to post the message to.
@@ -110,9 +89,7 @@ class Slack
 	 */
 	postMessage(channel, text, options)
 	{
-		if (this.liveFire) {
-			this.botWebClient.chat.postMessage(channel, text, options);
-		}
+		this.botWebClient.chat.postMessage(channel, text, options);
 	}
 
 	/**
@@ -122,9 +99,7 @@ class Slack
 	 */
 	sendTyping(channel)
 	{
-		if (this.liveFire) {
-			this.rtmClient.sendTyping(channel);
-		}
+		this.rtmClient.sendTyping(channel);
 	}
 
 	/**
@@ -134,9 +109,7 @@ class Slack
 	 */
 	updateMessage(message)
 	{
-		if (this.liveFire) {
-			this.rtmClient.updateMessage(message);
-		}
+		this.rtmClient.updateMessage(message);
 	}
 
 	/**
@@ -148,11 +121,9 @@ class Slack
 	 */
 	dm(uid, text, options)
 	{
-		if (this.liveFire) {
-			this.botWebClient.dm.open(uid, (err, response) => {
-				this.postMessage(response.channel.id, text, options);
-			});
-		}
+		this.botWebClient.dm.open(uid, (err, response) => {
+			this.postMessage(response.channel.id, text, options);
+		});
 	}
 
 	/**
@@ -163,9 +134,7 @@ class Slack
 	 */
 	userInfo(uid, callback)
 	{
-		if (this.liveFire) {
-			this.botWebClient.users.info(uid, callback);
-		}
+		this.botWebClient.users.info(uid, callback);
 	}
 
 	/**
@@ -176,9 +145,7 @@ class Slack
 	 */
 	createPublicChannel(name, callback)
 	{
-		if (this.liveFire) {
-			this.appWebClient.channels.create(name, callback);
-		}
+		this.appWebClient.channels.create(name, callback);
 	}
 
 	/**
@@ -189,9 +156,7 @@ class Slack
 	 */
 	createPrivateChannel(name, callback)
 	{
-		if (this.liveFire) {
-			this.appWebClient.groups.create(name, callback);
-		}
+		this.appWebClient.groups.create(name, callback);
 	}
 
 	/**
@@ -203,9 +168,7 @@ class Slack
 	 */
 	invitePrivateChannel(channel, uid, callback)
 	{
-		if (this.liveFire) {
-			this.appWebClient.groups.invite(channel, uid, callback);
-		}
+		this.appWebClient.groups.invite(channel, uid, callback);
 	}
 
 	/**
@@ -216,10 +179,8 @@ class Slack
 	 */
 	leavePrivateChannel(channel, callback)
 	{
-		if (this.liveFire) {
-			this.appWebClient.groups.leave(channel, callback);
-		}
+		this.appWebClient.groups.leave(channel, callback);
 	}
 }
 
-module.exports = Slack;
+module.exports = Slacksimple;

@@ -1,4 +1,4 @@
-# Slackwrapper
+# Slacksimple
 
 A wrapper for [node-slack-sdk](https://github.com/slackhq/node-slack-client) to make the common tasks easier.
 
@@ -6,8 +6,8 @@ A wrapper for [node-slack-sdk](https://github.com/slackhq/node-slack-client) to 
 
 Setup:
 ```
-const SlackWrapper = require('./slackwrapper');
-const slack = new SlackWrapper(botToken, appToken);
+const Slacksimple = require('./slackwrapper');
+const slack = new Slacksimple(botToken, appToken);
 slack.connect();
 ```
 
