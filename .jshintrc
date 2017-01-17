@@ -1,6 +1,7 @@
 {
     "esversion": 6,
     "node": true,
-    "predef": [ "__", "_", "ROOT_PATH", "APP_PATH", "UTIL_PATH", "CONTENT_PATH", "CONTENT_FILES_PATH", "COMMAND_PATH", "DB_POOL" ],
-    "laxbreak": true
+    "laxbreak": true,
+    "unused": true,
+    "undef": true
 }
