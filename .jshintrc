@@ -2,6 +2,6 @@
     "esversion": 6,
     "node": true,
     "laxbreak": true,
-    "unused": true,
+    "unused": "vars",
     "undef": true
 }
