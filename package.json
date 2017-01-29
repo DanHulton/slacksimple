@@ -2,7 +2,7 @@
   "name": "slacksimple",
   "version": "0.1.0",
   "description": "Wrapper for Slack library.",
-  "main": "slack.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -12,7 +12,8 @@
   },
   "dependencies": {
     "@slack/client": "3.5.4",
-    "bunyan": "1.8.1"
+    "bunyan": "1.8.1",
+    "lodash": "4.17.4"
   },
   "author": "",
   "license": "ISC",
