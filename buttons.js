@@ -56,6 +56,26 @@ class Buttons {
 	}
 
 	/**
+	 * Create and return an Attachments collection with one attachment in it.
+	 *
+	 * @param string text    The text to display.
+	 * @param string command The name of the command to execute.
+	 * @param object params  Optional paramters to pass to the command.
+	 * @param string style   Optional style for the button.
+	 * @param string confirm Optional confirmation instructions.
+	 *
+	 * @return object
+	 */
+	static one(text, command, { params={}, style=false, confirm=false } = {})
+	{
+		let buttons = new Buttons();
+
+		buttons.add(text, command, { params, style, confirm });
+
+		return buttons;
+	}
+
+	/**
 	 * Get the collection of buttons.
 	 *
 	 * @return array
