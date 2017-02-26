@@ -3,5 +3,8 @@
     "node": true,
     "laxbreak": true,
     "unused": "vars",
+    "predef": [
+        "_", // Lodash
+    ],
     "undef": true
 }
