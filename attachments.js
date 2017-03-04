@@ -50,6 +50,16 @@ class Attachments {
 	}
 
 	/**
+	 * Get the count of attachments added so far.
+	 *
+	 * @return integer
+	 */
+	get length()
+	{
+		return this.collection.length;
+	}
+
+	/**
 	 * Create and return a single attachment.
 	 *
 	 * @param string  title       A bold title to place at the top of your attachment.

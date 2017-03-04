@@ -25,6 +25,16 @@ class Buttons {
 	}
 
 	/**
+	 * Get the count of buttons added so far.
+	 *
+	 * @return integer
+	 */
+	get length()
+	{
+		return this.collection.length;
+	}
+
+	/**
 	 * Create and return a single button.
 	 *
 	 * @param string text    The text to display.

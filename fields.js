@@ -21,6 +21,16 @@ class Fields {
 	}
 
 	/**
+	 * Get the count of fields added so far.
+	 *
+	 * @return integer
+	 */
+	get length()
+	{
+		return this.collection.length;
+	}
+
+	/**
 	 * Get the collection of fields.
 	 *
 	 * @return array

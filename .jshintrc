@@ -1,10 +1,8 @@
 {
-    "esversion": 6,
-    "node": true,
-    "laxbreak": true,
-    "unused": "vars",
-    "predef": [
-        "_", // Lodash
-    ],
-    "undef": true
+	"esversion": 6,
+	"node": true,
+	"laxbreak": true,
+	"unused": "vars",
+	"predef": ["_"],
+	"undef": true
 }
