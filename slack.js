@@ -83,13 +83,14 @@ class Slacksimple
 	/**
 	 * Post a message to a channel.
 	 *
-	 * @param string channel The channel to post the message to.
-	 * @param string text    The text of the message.
-	 * @param object options The message options.
+	 * @param string   channel The channel to post the message to.
+	 * @param string   text    The text of the message.
+	 * @param object   options The message options.
+	 * @param function done    A callback to call when done.
 	 */
-	postMessage(channel, text, options)
+	postMessage(channel, text, options, done = null)
 	{
-		this.botWebClient.chat.postMessage(channel, text, options);
+		this.botWebClient.chat.postMessage(channel, text, options, done);
 	}
 
 	/**
@@ -105,81 +106,83 @@ class Slacksimple
 	/**
 	 * Update a message that already exists in Slack.
 	 *
-	 * @param object message The message to update.
+	 * @param object   message The message to update.
+	 * @param function done    A function to call when done.
 	 */
-	updateMessage(message)
+	updateMessage(message, done = null)
 	{
-		this.rtmClient.updateMessage(message);
+		this.rtmClient.updateMessage(message, done);
 	}
 
 	/**
 	 * Direct Message a user.
 	 *
-	 * @param string uid     The user ID of the user to message.
-	 * @param string text    The text of the message to send to them.
-	 * @param object options The options of the message to send to them.
+	 * @param string   uid     The user ID of the user to message.
+	 * @param string   text    The text of the message to send to them.
+	 * @param object   options The options of the message to send to them.
+	 * @param function done    A callback to call when done.
 	 */
-	dm(uid, text, options)
+	dm(uid, text, options, done)
 	{
 		this.botWebClient.dm.open(uid, (err, response) => {
-			this.postMessage(response.channel.id, text, options);
+			this.postMessage(response.channel.id, text, options, done);
 		});
 	}
 
 	/**
 	 * Retrieve information about a user.
 	 *
-	 * @param string   uid      The user's ID.
-	 * @param function callback Called with user details from Slack.
+	 * @param string   uid  The user's ID.
+	 * @param function done Called with user details from Slack.
 	 */
-	userInfo(uid, callback)
+	userInfo(uid, done)
 	{
-		this.botWebClient.users.info(uid, callback);
+		this.botWebClient.users.info(uid, done);
 	}
 
 	/**
 	 * Create a new public channel.
 	 *
-	 * @param string   name     The name of the channel to create.
-	 * @param function callback A function to call when complete.
+	 * @param string   name The name of the channel to create.
+	 * @param function done A function to call when complete.
 	 */
-	createPublicChannel(name, callback)
+	createPublicChannel(name, done)
 	{
-		this.appWebClient.channels.create(name, callback);
+		this.appWebClient.channels.create(name, done);
 	}
 
 	/**
 	 * Create a new private channel.
 	 *
-	 * @param string   name     The name of the channel to create.
-	 * @param function callback A function to call when complete.
+	 * @param string   name The name of the channel to create.
+	 * @param function done A function to call when complete.
 	 */
-	createPrivateChannel(name, callback)
+	createPrivateChannel(name, done)
 	{
-		this.appWebClient.groups.create(name, callback);
+		this.appWebClient.groups.create(name, done);
 	}
 
 	/**
 	 * Invite a user to a private channel.
 	 *
-	* @param string   channel  The ID of the private channel.
-	* @param string   uid      The ID of the user to invite.
-	* @param function callback A function to call when complete.
+	* @param string   channel The ID of the private channel.
+	* @param string   uid     The ID of the user to invite.
+	* @param function done    A function to call when complete.
 	 */
-	invitePrivateChannel(channel, uid, callback)
+	invitePrivateChannel(channel, uid, done)
 	{
-		this.appWebClient.groups.invite(channel, uid, callback);
+		this.appWebClient.groups.invite(channel, uid, done);
 	}
 
 	/**
 	 * Have the admin user leave a private channel.
 	 *
- 	 * @param string   channel  The ID of the private channel.
-	 * @param function callback A function to call when complete.
+ 	 * @param string   channel The ID of the private channel.
+	 * @param function done    A function to call when complete.
 	 */
-	leavePrivateChannel(channel, callback)
+	leavePrivateChannel(channel, done)
 	{
-		this.appWebClient.groups.leave(channel, callback);
+		this.appWebClient.groups.leave(channel, done);
 	}
 }
 
