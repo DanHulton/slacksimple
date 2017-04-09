@@ -18,10 +18,14 @@ class Buttons {
 	 * @param object params  Optional paramters to pass to the command.
 	 * @param string style   Optional style for the button.
 	 * @param string confirm Optional confirmation instructions.
+	 *
+	 * @return Buttons
 	 */
 	add(text, command, { params={}, style=false, confirm=false } = {})
 	{
 		this.collection.push(Buttons.single(text, command, { params, style, confirm }));
+
+		return this;
 	}
 
 	/**

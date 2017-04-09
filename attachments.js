@@ -1,5 +1,8 @@
 "use strict";
 
+const _ = require('lodash');
+const Buttons = require('./buttons');
+
 /**
  * A collection of attachments to display in Slack.
  */
@@ -7,7 +10,6 @@ class Attachments {
 	constructor() {
 		this.collection = [];
 	}
-
 
 	/**
 	 * Add an attachment to the collection.
@@ -22,6 +24,8 @@ class Attachments {
 	 * @param string  callback_id Identifies the collection of buttons.  REQUIRED if buttons set!
 	 * @param string  image_url   URL for an image.
 	 * @param string  thumb_url   URL for a thumbnail image.
+	 *
+	 * @return Attachments
 	 */
 	add({
 		title = false,
@@ -47,6 +51,8 @@ class Attachments {
 			image_url,
 			thumb_url
 		}));
+
+		return this;
 	}
 
 	/**
@@ -120,7 +126,10 @@ class Attachments {
 		if (buttons) {
 			attachment.actions         = buttons.getCollection();
 			attachment.attachment_type = 'default';
-			attachment.callback_id     = callback_id;
+		}
+
+		if (callback_id) {
+			attachment.callback_id = callback_id;
 		}
 
 		if (image_url) {
@@ -148,7 +157,7 @@ class Attachments {
 	 * @param string  image_url   URL for an image.
 	 * @param string  thumb_url   URL for a thumbnail image.
 	 *
-	 * @return object
+	 * @return Attachments
 	 */
 	static one({
 		title = false,
@@ -178,6 +187,50 @@ class Attachments {
 		});
 
 		return attachments;
+	}
+
+	/**
+	 * Add a button to last attachment in collection.  If attachment is full, create a new one.
+	 *
+	 * @param string text    The text to display.
+	 * @param string command The name of the command to execute.
+	 * @param object params  Optional paramters to pass to the command.
+	 * @param string style   Optional style for the button.
+	 * @param string confirm Optional confirmation instructions.
+	 *
+	 * @return Buttons
+	 */
+	addButton(text, command, { params={}, style=false, confirm=false } = {})
+	{
+		if (this.length == 0) {
+			throw new Error("Cannot add a button to empty Attachments.");
+		}
+
+		let lastAttachment = this.collection[this.length - 1];
+
+		// Ensure there's an "actions" array to add button to
+		if (_.isUndefined(lastAttachment.actions)) {
+			if (_.isUndefined(lastAttachment.callback_id)) {
+				throw new Error("Cannot add a button to an Attachment without a callback_id.");
+			}
+
+			lastAttachment.actions = [];
+			lastAttachment.attachment_type = 'default';
+		}
+		// Ensure the attachment we're adding to has room
+		else if (lastAttachment.actions.length === 5) {
+			const title = " ";
+			const color = _.get(lastAttachment, "color", false);
+			const callback_id = lastAttachment.callback_id;
+			const buttons = new Buttons();
+			this.add({ title, color, callback_id, buttons });
+
+			return this.addButton(text, command, { params, style, confirm });
+		}
+
+		lastAttachment.actions.push(Buttons.single(text, command, { params, style, confirm }));
+
+		return this;
 	}
 
 	/**

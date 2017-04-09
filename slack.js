@@ -163,6 +163,17 @@ class Slacksimple
 	}
 
 	/**
+	 * Create a new private channel.
+	 *
+	 * @param string   name The name of the channel to create.
+	 * @param function done A function to call when complete.
+	 */
+	openPrivateChannel(name, done)
+	{
+		this.appWebClient.groups.open(name, done);
+	}
+
+	/**
 	 * Invite a user to a private channel.
 	 *
 	* @param string   channel The ID of the private channel.

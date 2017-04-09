@@ -15,6 +15,11 @@
     "bunyan": "1.8.1",
     "lodash": "4.17.4"
   },
+  "jest": {
+    "testRegex": "(/tests/.*|\\.(test|spec))\\.(js|jsx)$",
+    "testEnvironment": "node",
+    "verbose": false
+  },
   "author": "",
   "license": "ISC",
   "bugs": {
