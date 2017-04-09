@@ -210,19 +210,16 @@ class Attachments {
 
 		// Ensure there's an "actions" array to add button to
 		if (_.isUndefined(lastAttachment.actions)) {
-			if (_.isUndefined(lastAttachment.callback_id)) {
-				throw new Error("Cannot add a button to an Attachment without a callback_id.");
-			}
-
 			lastAttachment.actions = [];
 			lastAttachment.attachment_type = 'default';
 		}
 		// Ensure the attachment we're adding to has room
 		else if (lastAttachment.actions.length === 5) {
-			const title = " ";
-			const color = _.get(lastAttachment, "color", false);
-			const callback_id = lastAttachment.callback_id;
-			const buttons = new Buttons();
+			const title       = " ";
+			const color       = _.get(lastAttachment, "color", false);
+			const callback_id = _.get(lastAttachment, "callback_id", false);
+			const buttons     = new Buttons();
+
 			this.add({ title, color, callback_id, buttons });
 
 			return this.addButton(text, command, { params, style, confirm });
