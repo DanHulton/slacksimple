@@ -202,8 +202,41 @@ class Attachments {
 	 */
 	addButton(text, command, { params={}, style=false, confirm=false } = {})
 	{
+		let lastAttachment = this.getLastFreeAttachment();
+
+		lastAttachment.actions.push(Actions.singleButton(text, command, { params, style, confirm }));
+
+		return this;
+	}
+
+	/**
+	 * Add a select to last attachment in collection.  If attachment is full, create a new one.
+	 *
+	 * @param string text    The text to display.
+	 * @param string command The name of the command to execute.
+	 * @param array  options The options for the select.
+	 *                       [{ text: "Text", params: {} }]
+	 *
+	 * @return Attachments
+	 */
+	addSelect(text, command, options=[])
+	{
+		let lastAttachment = this.getLastFreeAttachment();
+
+		lastAttachment.actions.push(Actions.singleSelect(text, command, options));
+
+		return this;
+	}
+
+	/**
+	 * Gets the last attachment with room free to add another action.
+	 *
+	 * @return object
+	 */
+	getLastFreeAttachment()
+	{
 		if (this.length == 0) {
-			throw new Error("Cannot add a button to empty Attachments.");
+			throw new Error("Cannot get attachments from an empty collection.");
 		}
 
 		let lastAttachment = this.collection[this.length - 1];
@@ -222,12 +255,10 @@ class Attachments {
 
 			this.add({ title, color, callback_id, actions });
 
-			return this.addButton(text, command, { params, style, confirm });
+			return this.getLastFreeAttachment();
 		}
 
-		lastAttachment.actions.push(Actions.singleButton(text, command, { params, style, confirm }));
-
-		return this;
+		return lastAttachment;
 	}
 
 	/**
