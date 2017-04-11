@@ -1,11 +1,11 @@
 const Slack       = require('./slack');
-const Buttons     = require('./buttons');
+const Actions     = require('./actions');
 const Fields      = require('./fields');
 const Attachments = require('./attachments');
 
 module.exports = {
 	Slack,
-	Buttons,
+	Actions,
 	Fields,
 	Attachments
 };

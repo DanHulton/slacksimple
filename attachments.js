@@ -1,7 +1,7 @@
 "use strict";
 
 const _ = require('lodash');
-const Buttons = require('./buttons');
+const Actions = require('./actions');
 
 /**
  * A collection of attachments to display in Slack.
@@ -20,8 +20,8 @@ class Attachments {
 	 * @param string  fallback    Fallback text to display on devices that can't display complex attachments.
 	 * @param string  color       A colour value to display to the left of your attachment.
 	 * @param Fields  fields      A collection of fields to add to your attachment.
-	 * @param Buttons buttons     A collection of buttons to add to your attachment.
-	 * @param string  callback_id Identifies the collection of buttons.  REQUIRED if buttons set!
+	 * @param Actions actions     A collection of actions to add to your attachment.
+	 * @param string  callback_id Identifies the collection of actions.  REQUIRED if actions set!
 	 * @param string  image_url   URL for an image.
 	 * @param string  thumb_url   URL for a thumbnail image.
 	 *
@@ -34,7 +34,7 @@ class Attachments {
 		fallback = false,
 		color = false,
 		fields = false,
-		buttons = false,
+		actions = false,
 		callback_id = false,
 		image_url = false,
 		thumb_url = false,
@@ -46,7 +46,7 @@ class Attachments {
 			fallback,
 			color,
 			fields,
-			buttons,
+			actions,
 			callback_id,
 			image_url,
 			thumb_url
@@ -74,8 +74,8 @@ class Attachments {
 	 * @param string  fallback    Fallback text to display on devices that can't display complex attachments.
 	 * @param string  color       A colour value to display to the left of your attachment.
 	 * @param Fields  fields      A collection of fields to add to your attachment.
-	 * @param Buttons buttons     A collection of buttons to add to your attachment.
-	 * @param string  callback_id Identifies the collection of buttons.  REQUIRED if buttons set!
+	 * @param Actions actions     A collection of actions to add to your attachment.
+	 * @param string  callback_id Identifies the collection of actions.  REQUIRED if actions set!
 	 * @param string  image_url   URL for an image.
 	 * @param string  thumb_url   URL for a thumbnail image.
 	 *
@@ -88,7 +88,7 @@ class Attachments {
 		fallback = false,
 		color = false,
 		fields = false,
-		buttons = false,
+		actions = false,
 		callback_id = false,
 		image_url = false,
 		thumb_url = false,
@@ -123,8 +123,8 @@ class Attachments {
 			}
 		}
 
-		if (buttons) {
-			attachment.actions         = buttons.getCollection();
+		if (actions) {
+			attachment.actions         = actions.getCollection();
 			attachment.attachment_type = 'default';
 		}
 
@@ -152,8 +152,8 @@ class Attachments {
 	 * @param string  fallback    Fallback text to display on devices that can't display complex attachments.
 	 * @param string  color       A colour value to display to the left of your attachment.
 	 * @param Fields  fields      A collection of fields to add to your attachment.
-	 * @param Buttons buttons     A collection of buttons to add to your attachment.
-	 * @param string  callback_id Identifies the collection of buttons.  REQUIRED if buttons set!
+	 * @param Actions actions     A collection of actions to add to your attachment.
+	 * @param string  callback_id Identifies the collection of actions.  REQUIRED if actions set!
 	 * @param string  image_url   URL for an image.
 	 * @param string  thumb_url   URL for a thumbnail image.
 	 *
@@ -166,7 +166,7 @@ class Attachments {
 		fallback = false,
 		color = false,
 		fields = false,
-		buttons = false,
+		actions = false,
 		callback_id = false,
 		image_url = false,
 		thumb_url = false,
@@ -180,7 +180,7 @@ class Attachments {
 			fallback,
 			color,
 			fields,
-			buttons,
+			actions,
 			callback_id,
 			image_url,
 			thumb_url
@@ -198,7 +198,7 @@ class Attachments {
 	 * @param string style   Optional style for the button.
 	 * @param string confirm Optional confirmation instructions.
 	 *
-	 * @return Buttons
+	 * @return Attachments
 	 */
 	addButton(text, command, { params={}, style=false, confirm=false } = {})
 	{
@@ -218,20 +218,20 @@ class Attachments {
 			const title       = " ";
 			const color       = _.get(lastAttachment, "color", false);
 			const callback_id = _.get(lastAttachment, "callback_id", false);
-			const buttons     = new Buttons();
+			const actions     = new Actions();
 
-			this.add({ title, color, callback_id, buttons });
+			this.add({ title, color, callback_id, actions });
 
 			return this.addButton(text, command, { params, style, confirm });
 		}
 
-		lastAttachment.actions.push(Buttons.single(text, command, { params, style, confirm }));
+		lastAttachment.actions.push(Actions.singleButton(text, command, { params, style, confirm }));
 
 		return this;
 	}
 
 	/**
-	 * Get the collection of buttons.
+	 * Get the collection of attachments.
 	 *
 	 * @return array
 	 */

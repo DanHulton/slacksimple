@@ -3,11 +3,21 @@
 const _ = require('lodash');
 
 /**
- * A collection of buttons to display in Slack.
+ * A collection of buttons/selects to display in Slack.
  */
-class Buttons {
+class Actions {
 	constructor() {
 		this.collection = [];
+	}
+
+	/**
+	 * Get the count of actions added so far.
+	 *
+	 * @return integer
+	 */
+	get length()
+	{
+		return this.collection.length;
 	}
 
 	/**
@@ -19,23 +29,13 @@ class Buttons {
 	 * @param string style   Optional style for the button.
 	 * @param string confirm Optional confirmation instructions.
 	 *
-	 * @return Buttons
+	 * @return Actions
 	 */
-	add(text, command, { params={}, style=false, confirm=false } = {})
+	addButton(text, command, { params={}, style=false, confirm=false } = {})
 	{
-		this.collection.push(Buttons.single(text, command, { params, style, confirm }));
+		this.collection.push(Actions.singleButton(text, command, { params, style, confirm }));
 
 		return this;
-	}
-
-	/**
-	 * Get the count of buttons added so far.
-	 *
-	 * @return integer
-	 */
-	get length()
-	{
-		return this.collection.length;
 	}
 
 	/**
@@ -49,7 +49,7 @@ class Buttons {
 	 *
 	 * @return object
 	 */
-	static single(text, command, { params={}, style=false, confirm=false } = {})
+	static singleButton(text, command, { params={}, style=false, confirm=false } = {})
 	{
 		let button = {
 			name: _.snakeCase(text),
@@ -70,7 +70,7 @@ class Buttons {
 	}
 
 	/**
-	 * Create and return an Attachments collection with one attachment in it.
+	 * Create and return an Actions collection with one button in it.
 	 *
 	 * @param string text    The text to display.
 	 * @param string command The name of the command to execute.
@@ -80,17 +80,17 @@ class Buttons {
 	 *
 	 * @return object
 	 */
-	static one(text, command, { params={}, style=false, confirm=false } = {})
+	static oneButton(text, command, { params={}, style=false, confirm=false } = {})
 	{
-		let buttons = new Buttons();
+		let actions = new Actions();
 
-		buttons.add(text, command, { params, style, confirm });
+		actions.addButton(text, command, { params, style, confirm });
 
-		return buttons;
+		return actions;
 	}
 
 	/**
-	 * Get the collection of buttons.
+	 * Get the collection of actions.
 	 *
 	 * @return array
 	 */
@@ -100,4 +100,4 @@ class Buttons {
 	}
 }
 
-module.exports = Buttons;
+module.exports = Actions;

@@ -2,7 +2,7 @@
 "use strict";
 
 const Attachments = require(`../attachments`);
-const Buttons     = require(`../buttons`);
+const Actions     = require(`../actions`);
 
 // -- Tests ----------------------------------------------------------------------------------------
 
@@ -21,7 +21,7 @@ describe('Attachments', () => {
 		it('should add a button to an attachment it has room', () => {
 			let attachments = new Attachments();
 
-			attachments.add({ title: 'title', buttons: new Buttons() });
+			attachments.add({ title: 'title', actions: new Actions() });
 
 			attachments.addButton('text', 'command');
 
@@ -94,7 +94,7 @@ describe('Attachments', () => {
 			}]);
 		});
 
-		it('should add a button to an attachment without buttons', () => {
+		it('should add a button to an attachment without actions', () => {
 			let attachments = new Attachments();
 
 			attachments.add({ title: 'title', callback_id: 'callback_id' });
