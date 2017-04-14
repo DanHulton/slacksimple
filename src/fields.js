@@ -1,7 +1,7 @@
 "use strict";
 
 /**
- * A collection of buttons to display in Slack.
+ * A collection of fields to display in Slack.
  */
 class Fields {
 	constructor() {
