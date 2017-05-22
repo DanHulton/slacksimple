@@ -1,8 +1,8 @@
 /*eslint mocha:true */
 "use strict";
 
-const Attachments = require(`../attachments`);
-const Actions     = require(`../actions`);
+const Attachments = require(`../src/attachments`);
+const Actions     = require(`../src/actions`);
 
 // -- Tests ----------------------------------------------------------------------------------------
 

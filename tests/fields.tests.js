@@ -1,7 +1,7 @@
 /*eslint mocha:true */
 "use strict";
 
-const Fields = require(`../fields`);
+const Fields = require(`../src/fields`);
 
 // -- Tests ----------------------------------------------------------------------------------------
 

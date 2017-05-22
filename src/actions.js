@@ -13,7 +13,7 @@ class Actions {
 	/**
 	 * Get the count of actions added so far.
 	 *
-	 * @return integer
+	 * @return {integer}
 	 */
 	get length()
 	{
@@ -23,13 +23,13 @@ class Actions {
 	/**
 	 * Add a button to the collection.
 	 *
-	 * @param string text    The text to display.
-	 * @param string command The name of the command to execute.
-	 * @param object params  Optional paramters to pass to the command.
-	 * @param string style   Optional style for the button.
-	 * @param string confirm Optional confirmation instructions.
+	 * @param {string} text - The text to display.
+	 * @param {string} command - The name of the command to execute.
+	 * @param {object} params - Optional paramters to pass to the command.
+	 * @param {string} style - Optional style for the button.
+	 * @param {string} confirm - Optional confirmation instructions.
 	 *
-	 * @return Actions
+	 * @return {Actions}
 	 */
 	addButton(text, command, { params={}, style=false, confirm=false } = {})
 	{
@@ -39,15 +39,23 @@ class Actions {
 	}
 
 	/**
+	 * Remove a row's worth of buttons.
+	 */
+	dropRow()
+	{
+		this.collection = _.drop(this.collection, 5);
+	}
+
+	/**
 	 * Create and return a single button.
 	 *
-	 * @param string text    The text to display.
-	 * @param string command The name of the command to execute.
-	 * @param object params  Optional paramters to pass to the command.
-	 * @param string style   Optional style for the button.
-	 * @param string confirm Optional confirmation instructions.
+	 * @param {string} text - The text to display.
+	 * @param {string} command - The name of the command to execute.
+	 * @param {object} params - Optional paramters to pass to the command.
+	 * @param {string} style - Optional style for the button.
+	 * @param {string} confirm - Optional confirmation instructions.
 	 *
-	 * @return object
+	 * @return {object}
 	 */
 	static singleButton(text, command, { params={}, style=false, confirm=false } = {})
 	{
@@ -72,13 +80,13 @@ class Actions {
 	/**
 	 * Create and return an Actions collection with one button in it.
 	 *
-	 * @param string text    The text to display.
-	 * @param string command The name of the command to execute.
-	 * @param object params  Optional paramters to pass to the command.
-	 * @param string style   Optional style for the button.
-	 * @param string confirm Optional confirmation instructions.
+	 * @param {string} text - The text to display.
+	 * @param {string} command - The name of the command to execute.
+	 * @param {object} params - Optional paramters to pass to the command.
+	 * @param {string} style - Optional style for the button.
+	 * @param {string} confirm - Optional confirmation instructions.
 	 *
-	 * @return object
+	 * @return {object}
 	 */
 	static oneButton(text, command, { params={}, style=false, confirm=false } = {})
 	{
@@ -92,13 +100,12 @@ class Actions {
 	/**
 	 * Add a select to the collection.
 	 *
-	 *
-	 * @param string text    The text to display.
-	 * @param string command The name of the command to execute.
-	 * @param array  options The options for the select.
+	 * @param {string} text - The text to display.
+	 * @param {string} command - The name of the command to execute.
+	 * @param {array} options - The options for the select.
 	 *                       [{ text: "Text", params: {} }]
 	 *
-	 * @return Actions
+	 * @return {Actions}
 	 */
 	addSelect(text, command, options=[])
 	{
@@ -110,12 +117,12 @@ class Actions {
 	/**
 	 * Create and return a single select.
 	 *
-	 * @param string text    The text to display.
-	 * @param string command The name of the command to execute.
-	 * @param array  options The options for the select.
+	 * @param {string} text - The text to display.
+	 * @param {string} command - The name of the command to execute.
+	 * @param {array} options - The options for the select.
 	 *                       [{ text: "Text", params: {} }]
 	 *
-	 * @return object
+	 * @return {object}
 	 */
 	static singleSelect(text, command, options=[])
 	{
@@ -135,12 +142,12 @@ class Actions {
 	/**
 	 * Create and return an Actions collection with one button in it.
 	 *
-	 * @param string text    The text to display.
-	 * @param string command The name of the command to execute.
-	 * @param array  options The options for the select.
+	 * @param {string} text - The text to display.
+	 * @param {string} command - The name of the command to execute.
+	 * @param {array} options - The options for the select.
 	 *                       [{ text: "Text", params: {} }]
 	 *
-	 * @return object
+	 * @return {object}
 	 */
 	static oneSelect(text, command, options=[])
 	{
@@ -154,7 +161,7 @@ class Actions {
 	/**
 	 * Get the collection of actions.
 	 *
-	 * @return array
+	 * @return {array}
 	 */
 	getCollection()
 	{

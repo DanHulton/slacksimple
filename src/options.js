@@ -11,8 +11,8 @@ class Options {
 	/**
 	 * Add an option to the collection.
 	 *
-	 * @param string  text   The text of the option.
-	 * @param object  params The parameters for the otpion.
+	 * @param {string} text - The text of the option.
+	 * @param {object} params - The parameters for the otpion.
 	 */
 	add(text, params)
 	{
@@ -22,7 +22,7 @@ class Options {
 	/**
 	 * Get the count of options added so far.
 	 *
-	 * @return integer
+	 * @return {integer}
 	 */
 	get length()
 	{
@@ -32,7 +32,7 @@ class Options {
 	/**
 	 * Get the collection of options.
 	 *
-	 * @return array
+	 * @return {array}
 	 */
 	getCollection()
 	{

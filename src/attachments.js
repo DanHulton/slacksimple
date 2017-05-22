@@ -14,18 +14,18 @@ class Attachments {
 	/**
 	 * Add an attachment to the collection.
 	 *
-	 * @param string  title       A bold title to place at the top of your attachment.
-	 * @param string  pretext     Text to place before your attachment.
-	 * @param string  text        The text to place inside your attachment.
-	 * @param string  fallback    Fallback text to display on devices that can't display complex attachments.
-	 * @param string  color       A colour value to display to the left of your attachment.
-	 * @param Fields  fields      A collection of fields to add to your attachment.
-	 * @param Actions actions     A collection of actions to add to your attachment.
-	 * @param string  callback_id Identifies the collection of actions.  REQUIRED if actions set!
-	 * @param string  image_url   URL for an image.
-	 * @param string  thumb_url   URL for a thumbnail image.
+	 * @param {string} title - A bold title to place at the top of your attachment.
+	 * @param {string} pretext - Text to place before your attachment.
+	 * @param {string} text - The text to place inside your attachment.
+	 * @param {string} fallback - Fallback text to display on devices that can't display complex attachments.
+	 * @param {string} color - A colour value to display to the left of your attachment.
+	 * @param {Fields} fields - A collection of fields to add to your attachment.
+	 * @param {Actions} actions - A collection of actions to add to your attachment.
+	 * @param {string} callback_id - Identifies the collection of actions.  REQUIRED if actions set!
+	 * @param {string} image_url - URL for an image.
+	 * @param {string} thumb_url - URL for a thumbnail image.
 	 *
-	 * @return Attachments
+	 * @return {Attachments}
 	 */
 	add({
 		title = false,
@@ -58,7 +58,7 @@ class Attachments {
 	/**
 	 * Get the count of attachments added so far.
 	 *
-	 * @return integer
+	 * @return {integer}
 	 */
 	get length()
 	{
@@ -68,18 +68,18 @@ class Attachments {
 	/**
 	 * Create and return a single attachment.
 	 *
-	 * @param string  title       A bold title to place at the top of your attachment.
-	 * @param string  pretext     Text to place before your attachment.
-	 * @param string  text        The text to place inside your attachment.
-	 * @param string  fallback    Fallback text to display on devices that can't display complex attachments.
-	 * @param string  color       A colour value to display to the left of your attachment.
-	 * @param Fields  fields      A collection of fields to add to your attachment.
-	 * @param Actions actions     A collection of actions to add to your attachment.
-	 * @param string  callback_id Identifies the collection of actions.  REQUIRED if actions set!
-	 * @param string  image_url   URL for an image.
-	 * @param string  thumb_url   URL for a thumbnail image.
+	 * @param {string} title - A bold title to place at the top of your attachment.
+	 * @param {string} pretext - Text to place before your attachment.
+	 * @param {string} text - The text to place inside your attachment.
+	 * @param {string} fallback - Fallback text to display on devices that can't display complex attachments.
+	 * @param {string} color - A colour value to display to the left of your attachment.
+	 * @param {Fields} fields - A collection of fields to add to your attachment.
+	 * @param {Actions} actions - A collection of actions to add to your attachment.
+	 * @param {string} callback_id - Identifies the collection of actions.  REQUIRED if actions set!
+	 * @param {string} image_url - URL for an image.
+	 * @param {string} thumb_url - URL for a thumbnail image.
 	 *
-	 * @return object
+	 * @return {object}
 	 */
 	static single({
 		title = false,
@@ -146,16 +146,16 @@ class Attachments {
 	/**
 	 * Create and return an Attachments collection with one attachment in it.
 	 *
-	 * @param string  title       A bold title to place at the top of your attachment.
-	 * @param string  pretext     Text to place before your attachment.
-	 * @param string  text        The text to place inside your attachment.
-	 * @param string  fallback    Fallback text to display on devices that can't display complex attachments.
-	 * @param string  color       A colour value to display to the left of your attachment.
-	 * @param Fields  fields      A collection of fields to add to your attachment.
-	 * @param Actions actions     A collection of actions to add to your attachment.
-	 * @param string  callback_id Identifies the collection of actions.  REQUIRED if actions set!
-	 * @param string  image_url   URL for an image.
-	 * @param string  thumb_url   URL for a thumbnail image.
+	 * @param {string} title - A bold title to place at the top of your attachment.
+	 * @param {string} pretext - Text to place before your attachment.
+	 * @param {string} text - The text to place inside your attachment.
+	 * @param {string} fallback - Fallback text to display on devices that can't display complex attachments.
+	 * @param {string} color - A colour value to display to the left of your attachment.
+	 * @param {Fields} fields - A collection of fields to add to your attachment.
+	 * @param {Actions} actions - A collection of actions to add to your attachment.
+	 * @param {string} callback_id - Identifies the collection of actions.  REQUIRED if actions set!
+	 * @param {string} image_url - URL for an image.
+	 * @param {string} thumb_url - URL for a thumbnail image.
 	 *
 	 * @return Attachments
 	 */
@@ -192,13 +192,13 @@ class Attachments {
 	/**
 	 * Add a button to last attachment in collection.  If attachment is full, create a new one.
 	 *
-	 * @param string text    The text to display.
-	 * @param string command The name of the command to execute.
-	 * @param object params  Optional paramters to pass to the command.
-	 * @param string style   Optional style for the button.
-	 * @param string confirm Optional confirmation instructions.
+	 * @param {string} text - The text to display.
+	 * @param {string} command - The name of the command to execute.
+	 * @param {object} params - Optional paramters to pass to the command.
+	 * @param {string} style - Optional style for the button.
+	 * @param {string} confirm - Optional confirmation instructions.
 	 *
-	 * @return Attachments
+	 * @return {Attachments}
 	 */
 	addButton(text, command, { params={}, style=false, confirm=false } = {})
 	{
@@ -212,12 +212,12 @@ class Attachments {
 	/**
 	 * Add a select to last attachment in collection.  If attachment is full, create a new one.
 	 *
-	 * @param string text    The text to display.
-	 * @param string command The name of the command to execute.
-	 * @param array  options The options for the select.
+	 * @param {string} text - The text to display.
+	 * @param {string} command - The name of the command to execute.
+	 * @param {array} options - The options for the select.
 	 *                       [{ text: "Text", params: {} }]
 	 *
-	 * @return Attachments
+	 * @return {Attachments}
 	 */
 	addSelect(text, command, options=[])
 	{
@@ -231,7 +231,7 @@ class Attachments {
 	/**
 	 * Gets the last attachment with room free to add another action.
 	 *
-	 * @return object
+	 * @return {object}
 	 */
 	getLastFreeAttachment()
 	{
@@ -264,7 +264,7 @@ class Attachments {
 	/**
 	 * Get the collection of attachments.
 	 *
-	 * @return array
+	 * @return {array}
 	 */
 	getCollection()
 	{

@@ -1,7 +1,7 @@
 /*eslint mocha:true */
 "use strict";
 
-const Actions = require(`../actions`);
+const Actions = require(`../src/actions`);
 
 // -- Tests ----------------------------------------------------------------------------------------
 
