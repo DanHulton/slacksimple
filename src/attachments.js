@@ -39,7 +39,7 @@ class Attachments {
 		image_url = false,
 		thumb_url = false,
 	} = {}) {
-		this.collection.push(Attachments.single({
+		this.collection.push(Attachments.get({
 			title,
 			pretext,
 			text,
@@ -66,7 +66,7 @@ class Attachments {
 	}
 
 	/**
-	 * Create and return a single attachment.
+	 * Create and return an attachment.
 	 *
 	 * @param {string} title - A bold title to place at the top of your attachment.
 	 * @param {string} pretext - Text to place before your attachment.
@@ -81,7 +81,7 @@ class Attachments {
 	 *
 	 * @return {object}
 	 */
-	static single({
+	static get({
 		title = false,
 		pretext = false,
 		text = false,
@@ -204,7 +204,7 @@ class Attachments {
 	{
 		let lastAttachment = this.getLastFreeAttachment();
 
-		lastAttachment.actions.push(Actions.singleButton(text, command, { params, style, confirm }));
+		lastAttachment.actions.push(Actions.getButton(text, command, { params, style, confirm }));
 
 		return this;
 	}
@@ -223,7 +223,7 @@ class Attachments {
 	{
 		let lastAttachment = this.getLastFreeAttachment();
 
-		lastAttachment.actions.push(Actions.singleSelect(text, command, options));
+		lastAttachment.actions.push(Actions.getSelect(text, command, options));
 
 		return this;
 	}

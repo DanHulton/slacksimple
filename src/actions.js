@@ -33,7 +33,7 @@ class Actions {
 	 */
 	addButton(text, command, { params={}, style=false, confirm=false } = {})
 	{
-		this.collection.push(Actions.singleButton(text, command, { params, style, confirm }));
+		this.collection.push(Actions.getButton(text, command, { params, style, confirm }));
 
 		return this;
 	}
@@ -47,7 +47,7 @@ class Actions {
 	}
 
 	/**
-	 * Create and return a single button.
+	 * Create and return a button.
 	 *
 	 * @param {string} text - The text to display.
 	 * @param {string} command - The name of the command to execute.
@@ -57,7 +57,7 @@ class Actions {
 	 *
 	 * @return {object}
 	 */
-	static singleButton(text, command, { params={}, style=false, confirm=false } = {})
+	static getButton(text, command, { params={}, style=false, confirm=false } = {})
 	{
 		let button = {
 			name: _.snakeCase(text),
@@ -109,13 +109,13 @@ class Actions {
 	 */
 	addSelect(text, command, options=[])
 	{
-		this.collection.push(Actions.singleSelect(text, command, options));
+		this.collection.push(Actions.getSelect(text, command, options));
 
 		return this;
 	}
 
 	/**
-	 * Create and return a single select.
+	 * Create and return a select.
 	 *
 	 * @param {string} text - The text to display.
 	 * @param {string} command - The name of the command to execute.
@@ -124,7 +124,7 @@ class Actions {
 	 *
 	 * @return {object}
 	 */
-	static singleSelect(text, command, options=[])
+	static getSelect(text, command, options=[])
 	{
 		return {
 			name: _.snakeCase(text),
