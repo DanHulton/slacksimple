@@ -6,21 +6,13 @@ const Actions = require(`../src/actions`);
 // -- Tests ----------------------------------------------------------------------------------------
 
 describe('Actions', () => {
-	describe('addButton()', () => {
-		it('should add a button', () => {
+	describe('getCollection()', () => {
+		it('should start with an empty collection', () => {
 			let actions = new Actions();
-			actions.addButton('text', 'command');
 
-			expect(actions).toEqual({
-				collection: [{
-					name: "text",
-					text: "text",
-					type: "button",
-					value: "command|{}"
-				}]
-			});
+			expect(actions.getCollection()).toEqual([]);
 		});
-	})
+	});
 
 	describe('dropRow()', () => {
 		it('should drop a row', () => {
@@ -44,6 +36,40 @@ describe('Actions', () => {
 			});
 		});
 	});
+
+	describe('addAction()', () => {
+		it('should add an action', () => {
+			let actions = new Actions();
+			let button = Actions.getButton('text', 'command');
+
+			actions.addAction(button);
+
+			expect(actions).toEqual({
+				collection: [{
+					name: "text",
+					text: "text",
+					type: "button",
+					value: "command|{}"
+				}]
+			});
+		});
+	});
+
+	describe('addButton()', () => {
+		it('should add a button', () => {
+			let actions = new Actions();
+			actions.addButton('text', 'command');
+
+			expect(actions).toEqual({
+				collection: [{
+					name: "text",
+					text: "text",
+					type: "button",
+					value: "command|{}"
+				}]
+			});
+		});
+	})
 
 	describe('getButton()', () => {
 		it('should create a valid button', () => {
@@ -147,14 +173,6 @@ describe('Actions', () => {
 					}],
 				}]
 			});
-		});
-	});
-
-	describe('getCollection()', () => {
-		it('should start with an empty collection', () => {
-			let actions = new Actions();
-
-			expect(actions.getCollection()).toEqual([]);
 		});
 	});
 });

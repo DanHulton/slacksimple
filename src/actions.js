@@ -21,6 +21,41 @@ class Actions {
 	}
 
 	/**
+	 * Get the collection of actions.
+	 *
+	 * @return {array}
+	 */
+	getCollection()
+	{
+		return this.collection;
+	}
+
+	/**
+	 * Remove a row's worth of buttons.
+	 */
+	dropRow()
+	{
+		this.collection = _.drop(this.collection, 5);
+	}
+
+	/**
+	 * Adds an action to the collection.
+	 *
+	 * NOT especially safe, since we just blindly add the object to the collection!  Make sure to
+	 * use Action.getButton() or Action.getSelect() to create the action to add.
+	 *
+	 * @param {object} action - The action to add.
+	 *
+	 * @return {Actions}
+	 */
+	addAction(action)
+	{
+		this.collection.push(action);
+
+		return this;
+	}
+
+	/**
 	 * Add a button to the collection.
 	 *
 	 * @param {string} text - The text to display.
@@ -36,14 +71,6 @@ class Actions {
 		this.collection.push(Actions.getButton(text, command, { params, style, confirm }));
 
 		return this;
-	}
-
-	/**
-	 * Remove a row's worth of buttons.
-	 */
-	dropRow()
-	{
-		this.collection = _.drop(this.collection, 5);
 	}
 
 	/**
@@ -156,16 +183,6 @@ class Actions {
 		actions.addSelect(text, command, options);
 
 		return actions;
-	}
-
-	/**
-	 * Get the collection of actions.
-	 *
-	 * @return {array}
-	 */
-	getCollection()
-	{
-		return this.collection;
 	}
 }
 
