@@ -53,6 +53,25 @@ describe('Actions', () => {
 				}]
 			});
 		});
+
+		it('should not add an empty action', () => {
+			let actions = new Actions();
+			let button = Actions.getButton('text', 'command');
+
+			actions.addAction(button);
+			actions.addAction(false);
+			actions.addAction('');
+			actions.addAction([]);
+
+			expect(actions).toEqual({
+				collection: [{
+					name: "text",
+					text: "text",
+					type: "button",
+					value: "command|{}"
+				}]
+			});
+		});
 	});
 
 	describe('addButton()', () => {

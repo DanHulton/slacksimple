@@ -50,7 +50,9 @@ class Actions {
 	 */
 	addAction(action)
 	{
-		this.collection.push(action);
+		if (action && ( ! (action instanceof Array) || action.length)) {
+			this.collection.push(action);
+		}
 
 		return this;
 	}
