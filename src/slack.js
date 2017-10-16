@@ -24,46 +24,30 @@ class Slacksimple
 
 	/**
 	 * Connect to Slack and get things started.
-	 *
-	 * @param {function} onClientPresenceChange - A function to bind to this event (optional).
-	 * @param {function} onMessage - A function to bind to this event (optional).
-	 * @param {object} bot - The bot handling events (optional).
 	 */
-	connect({ onClientPresenceChange, onMessage, bot })
+	async connect()
 	{
-		this._connectRtmClient(this.teamName, this.botToken, onClientPresenceChange, onMessage, bot);
 		this._connectWebClient(this.botToken, this.appToken);
+		await this._connectRtmClient(this.botToken);
 	}
 
 	/**
 	 * Connect the real-time slack client.
 	 *
-	 * @param {string} teamName - The name of the team we're connecting to.
 	 * @param {string} botToken - The token identifying the connecting bot.
-	 * @param {function} onClientPresenceChange - A function to bind to this event (optional).
-	 * @param {function} onMessage - A function to bind to this event (optional).
-	 * @param {object} bot - The bot handling events (optional).
 	 *
 	 * @return void
 	 */
-	_connectRtmClient(teamName, botToken, onClientPresenceChange, onMessage, bot)
+	async _connectRtmClient(botToken)
 	{
 		this.log.info('Connecting to Slack...');
 
 		this.rtmClient = new RtmClient(botToken, { logLevel: process.env.RTM_LOG_LEVEL });
 		this.rtmClient.start();
 
-		this.rtmClient.on(RTM_CLIENT_EVENTS.AUTHENTICATED, (rtmStartData) => {
-			this.log.info('Connected to Slack.');
-		});
+		await this.rtmClient.on(RTM_CLIENT_EVENTS.AUTHENTICATED);
 
-		if ( ! _.isUndefined(onClientPresenceChange)) {
-			this.rtmClient.on(RTM_EVENTS.PRESENCE_CHANGE, onClientPresenceChange.bind(bot));
-		}
-
-		if ( ! _.isUndefined(onMessage)) {
-			this.rtmClient.on(RTM_EVENTS.MESSAGE, onMessage.bind(bot));
-		}
+		this.log.info('Connected to Slack!');
 	}
 
 	/**
@@ -86,11 +70,12 @@ class Slacksimple
 	 * @param {string} channel - The channel to post the message to.
 	 * @param {string} text - The text of the message.
 	 * @param {object} options - The message options.
-	 * @param {function} done - A callback to call when done.
+	 *
+	 * @return {object}
 	 */
-	postMessage(channel, text, options, done = null)
+	async postMessage(channel, text, options)
 	{
-		this.botWebClient.chat.postMessage(channel, text, options, done);
+		return await this.botWebClient.chat.postMessage(channel, text, options);
 	}
 
 	/**
@@ -107,11 +92,12 @@ class Slacksimple
 	 * Update a message that already exists in Slack.
 	 *
 	 * @param {object} message - The message to update.
-	 * @param {function} done - A function to call when done.
+	 *
+	 * @return {object}
 	 */
-	updateMessage(message, done = null)
+	async updateMessage(message)
 	{
-		this.rtmClient.updateMessage(message, done);
+		return await this.rtmClient.updateMessage(message);
 	}
 
 	/**
@@ -120,57 +106,61 @@ class Slacksimple
 	 * @param {string} uid - The user ID of the user to message.
 	 * @param {string} text - The text of the message to send to them.
 	 * @param {object} options - The options of the message to send to them.
-	 * @param {function} done - A callback to call when done.
+	 *
+	 * @return {object}
 	 */
-	dm(uid, text, options, done)
+	async dm(uid, text, options)
 	{
-		this.botWebClient.dm.open(uid, (err, response) => {
-			this.postMessage(response.channel.id, text, options, done);
-		});
+		const response = await this.botWebClient.dm.open(uid);
+		return await this.postMessage(response.channel.id, text, options);
 	}
 
 	/**
 	 * Retrieve information about a user.
 	 *
 	 * @param {string} uid - The user's ID.
-	 * @param {function} done - Called with user details from Slack.
+	 *
+	 * @rturn {object}
 	 */
-	userInfo(uid, done)
+	async userInfo(uid)
 	{
-		this.botWebClient.users.info(uid, done);
+		return await this.botWebClient.users.info(uid);
 	}
 
 	/**
 	 * Create a new public channel.
 	 *
 	 * @param {string} name - The name of the channel to create.
-	 * @param {function} done - A function to call when complete.
+	 *
+	 * @return {object}
 	 */
-	createPublicChannel(name, done)
+	async createPublicChannel(name)
 	{
-		this.appWebClient.channels.create(name, done);
+		return await this.appWebClient.channels.create(name);
 	}
 
 	/**
 	 * Create a new private channel.
 	 *
 	 * @param {string} name - The name of the channel to create.
-	 * @param {function} done - A function to call when complete.
+	 *
+	 * @return {object}
 	 */
-	createPrivateChannel(name, done)
+	async createPrivateChannel(name)
 	{
-		this.appWebClient.groups.create(name, done);
+		return await this.appWebClient.groups.create(name);
 	}
 
 	/**
 	 * Create a new private channel.
 	 *
 	 * @param {string} name - The name of the channel to create.
-	 * @param {function} done - A function to call when complete.
+	 *
+	 * @return {object}
 	 */
-	openPrivateChannel(name, done)
+	async openPrivateChannel(name)
 	{
-		this.appWebClient.groups.open(name, done);
+		return await this.appWebClient.groups.open(name);
 	}
 
 	/**
@@ -178,22 +168,24 @@ class Slacksimple
 	 *
 	* @param {string} channel - The ID of the private channel.
 	* @param {string} uid - The ID of the user to invite.
-	* @param {function} done - A function to call when complete.
+	*
+	* @return {object}
 	 */
-	invitePrivateChannel(channel, uid, done)
+	async invitePrivateChannel(channel, uid)
 	{
-		this.appWebClient.groups.invite(channel, uid, done);
+		return await this.appWebClient.groups.invite(channel, uid);
 	}
 
 	/**
 	 * Have the admin user leave a private channel.
 	 *
  	 * @param {string} channel - The ID of the private channel.
-	 * @param {function} done - A function to call when complete.
+ 	 *
+ 	 * @return {object}
 	 */
-	leavePrivateChannel(channel, done)
+	async leavePrivateChannel(channel)
 	{
-		this.appWebClient.groups.leave(channel, done);
+		return await this.appWebClient.groups.leave(channel);
 	}
 }
 
