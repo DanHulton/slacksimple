@@ -187,6 +187,19 @@ class Slacksimple
 	{
 		return await this.appWebClient.groups.leave(channel);
 	}
+
+	/**
+	 * Get the UIDs of the members connected to a channel.
+	 *
+	 * @param {string} channel - The ID of the channel.
+	 *
+	 * @return {array}
+	 */
+	async getConversationMembers(channel)
+	{
+		const response = await this.botWebClient.conversations.members(channel);
+		return response.members;
+	}
 }
 
 module.exports = Slacksimple;
