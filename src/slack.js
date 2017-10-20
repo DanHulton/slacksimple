@@ -200,6 +200,19 @@ class Slacksimple
 		const response = await this.botWebClient.conversations.members(channel);
 		return response.members;
 	}
+
+	/**
+	 * Get information about a conversation.
+	 *
+	 * @param {string} channel - The ID of the channel.
+	 *
+	 * @return {object}
+	 */
+	async getConversationInfo(channel)
+	{
+		const response = await this.botWebClient.conversations.info(channel);
+		return response.channel;
+	}
 }
 
 module.exports = Slacksimple;
