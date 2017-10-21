@@ -13,12 +13,14 @@ class Slacksimple
 	 *
 	 * @param {string} botToken - The token identifying the connecting bot.
 	 * @param {string} appToken - The token identifying the app admin.
+	 * @param {string} botId - The ID of the bot that interacts with this Slack workspace.
 	 * @param {string} loggerName - The name of the logger we'll output with.
 	 */
-	constructor(botToken, appToken, loggerName = 'slack')
+	constructor(botToken, appToken, botId, loggerName = 'slack')
 	{
 		this.botToken = botToken;
 		this.appToken = appToken;
+		this.botId    = botId;
 		this.log      = require('bunyan').createLogger({ name: loggerName });
 	}
 
