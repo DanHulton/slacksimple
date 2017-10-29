@@ -1,10 +1,6 @@
 "use strict";
 
-const RtmClient = require('@slack/client').RtmClient;
 const WebClient = require('@slack/client').WebClient;
-
-const RTM_EVENTS        = require('@slack/client').RTM_EVENTS;
-const RTM_CLIENT_EVENTS = require('@slack/client').CLIENT_EVENTS.RTM;
 
 class Slacksimple
 {
@@ -29,41 +25,8 @@ class Slacksimple
 	 */
 	async connect()
 	{
-		this._connectWebClient(this.botToken, this.appToken);
-		await this._connectRtmClient(this.botToken);
-	}
-
-	/**
-	 * Connect the real-time slack client.
-	 *
-	 * @param {string} botToken - The token identifying the connecting bot.
-	 *
-	 * @return void
-	 */
-	async _connectRtmClient(botToken)
-	{
-		this.log.info('Connecting to Slack...');
-
-		this.rtmClient = new RtmClient(botToken, { logLevel: process.env.RTM_LOG_LEVEL });
-		this.rtmClient.start();
-
-		await this.rtmClient.on(RTM_CLIENT_EVENTS.AUTHENTICATED);
-
-		this.log.info('Connected to Slack!');
-	}
-
-	/**
-	 * Connect the web slack client.
-	 *
-	 * @param {string} botToken - The token identifying the connecting bot.
-	 * @param {string} appToken - The token identifying the app admin.
-	 *
-	 * @return void
-	 */
-	_connectWebClient(botToken, appToken)
-	{
-		this.botWebClient = new WebClient(botToken);
-		this.appWebClient = new WebClient(appToken);
+		this.botWebClient = new WebClient(this.botToken);
+		this.appWebClient = new WebClient(this.appToken);
 	}
 
 	/**
@@ -83,23 +46,16 @@ class Slacksimple
 	/**
 	 * Update a message that already exists in Slack.
 	 *
-	 * @param {object} message - The message to update.
-	 */
-	sendTyping(channel)
-	{
-		this.rtmClient.sendTyping(channel);
-	}
-
-	/**
-	 * Update a message that already exists in Slack.
-	 *
-	 * @param {object} message - The message to update.
+	 * @param {string} ts - The timestamp of the message to update.
+	 * @param {string} channel The channel to update.
+	 * @param {string} text - The message to write.
+	 * @param {object} options - The message options.
 	 *
 	 * @return {object}
 	 */
-	async updateMessage(message)
+	async updateMessage(ts, channel, text, options)
 	{
-		return await this.rtmClient.updateMessage(message);
+		return await this.botWebClient.chat.update(ts, channel, text, options);
 	}
 
 	/**
