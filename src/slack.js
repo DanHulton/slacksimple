@@ -44,6 +44,19 @@ class Slacksimple
 	}
 
 	/**
+	 * Delete a message that already exists in Slack.
+	 *
+	 * @param {string} ts - The timestamp of the message to delete.
+	 * @param {string} channel The channel to delete.
+	 *
+	 * @return {object}
+	 */
+	async deleteMessage(ts, channel)
+	{
+		return await this.botWebClient.chat.delete(ts, channel);
+	}
+
+	/**
 	 * Update a message that already exists in Slack.
 	 *
 	 * @param {string} ts - The timestamp of the message to update.
