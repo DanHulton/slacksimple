@@ -4,7 +4,8 @@
  * A collection of fields to display in Slack.
  */
 class Fields {
-	constructor() {
+	constructor()
+	{
 		this.collection = [];
 	}
 

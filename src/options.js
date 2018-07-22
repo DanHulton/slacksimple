@@ -4,7 +4,8 @@
  * A collection of options to display in menu item message actions.
  */
 class Options {
-	constructor() {
+	constructor()
+	{
 		this.collection = [];
 	}
 
