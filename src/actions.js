@@ -1,12 +1,13 @@
 "use strict";
 
-const _ = require('lodash');
+const { drop, snakeCase, get } = require('lodash');
 
 /**
  * A collection of buttons/selects to display in Slack.
  */
 class Actions {
-	constructor() {
+	constructor()
+	{
 		this.collection = [];
 	}
 
@@ -35,7 +36,7 @@ class Actions {
 	 */
 	dropRow()
 	{
-		this.collection = _.drop(this.collection, 5);
+		this.collection = drop(this.collection, 5);
 	}
 
 	/**
@@ -89,7 +90,7 @@ class Actions {
 	static getButton(text, command, { params={}, style=false, confirm=false } = {})
 	{
 		let button = {
-			name: _.snakeCase(text),
+			name: snakeCase(text),
 			text,
 			value: `${command}|${JSON.stringify(params)}`,
 			type: "button",
@@ -156,13 +157,13 @@ class Actions {
 	static getSelect(text, command, options=[])
 	{
 		return {
-			name: _.snakeCase(text),
+			name: snakeCase(text),
 			text,
 			type: "select",
 			options: options.map((option) => {
 				return {
 					text: option.text,
-					value: `${command}|${JSON.stringify(_.get(option, 'params', {}))}`,
+					value: `${command}|${JSON.stringify(get(option, 'params', {}))}`,
 				};
 			})
 		};

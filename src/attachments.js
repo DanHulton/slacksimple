@@ -7,7 +7,8 @@ const Actions = require('./actions');
  * A collection of attachments to display in Slack.
  */
 class Attachments {
-	constructor() {
+	constructor()
+	{
 		this.collection = [];
 	}
 

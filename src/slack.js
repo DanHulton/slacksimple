@@ -40,7 +40,11 @@ class Slacksimple
 	 */
 	async postMessage(channel, text, options)
 	{
-		return await this.botWebClient.chat.postMessage(channel, text, options);
+		return await this.botWebClient.chat.postMessage({
+			channel,
+			text,
+			...options
+		});
 	}
 
 	/**
@@ -53,7 +57,10 @@ class Slacksimple
 	 */
 	async deleteMessage(ts, channel)
 	{
-		return await this.botWebClient.chat.delete(ts, channel);
+		return await this.botWebClient.chat.delete({
+			ts,
+			channel
+		});
 	}
 
 	/**
@@ -68,34 +75,62 @@ class Slacksimple
 	 */
 	async updateMessage(ts, channel, text, options)
 	{
-		return await this.botWebClient.chat.update(ts, channel, text, options);
+		return await this.botWebClient.chat.update({
+			ts,
+			channel,
+			text,
+			...options
+		});
 	}
 
 	/**
 	 * Direct Message a user.
 	 *
-	 * @param {string} uid - The user ID of the user to message.
+	 * @param {string} user - The user ID of the user to message.
 	 * @param {string} text - The text of the message to send to them.
 	 * @param {object} options - The options of the message to send to them.
 	 *
 	 * @return {object}
 	 */
-	async dm(uid, text, options)
+	async dm(user, text, options)
 	{
-		const response = await this.botWebClient.dm.open(uid);
-		return await this.postMessage(response.channel.id, text, options);
+		const response = await this.botWebClient.im.open({
+			user
+		});
+
+		return await this.postMessage({
+			channel: response.channel.id,
+			text,
+			...options
+		});
+	}
+
+	/**
+	 * Trigger a dialog to be shown to a user.
+	 *
+	 * @param {string} trigger_id - The trigger ID of the message initiating the dialog.
+	 * @param {object} dialog - The dialog to send.
+	 */
+	async dialog(trigger_id, dialog)
+	{
+		return this.botWebClient.dialog.open({
+			trigger_id,
+			dialog,
+		});
 	}
 
 	/**
 	 * Retrieve information about a user.
 	 *
-	 * @param {string} uid - The user's ID.
+	 * @param {string} user - The user's ID.
 	 *
 	 * @rturn {object}
 	 */
-	async userInfo(uid)
+	async userInfo(user)
 	{
-		return await this.botWebClient.users.info(uid);
+		return await this.botWebClient.users.info({
+			user
+		});
 	}
 
 	/**
@@ -107,7 +142,9 @@ class Slacksimple
 	 */
 	async createPublicChannel(name)
 	{
-		return await this.appWebClient.channels.create(name);
+		return await this.appWebClient.channels.create({
+			name
+		});
 	}
 
 	/**
@@ -119,32 +156,25 @@ class Slacksimple
 	 */
 	async createPrivateChannel(name)
 	{
-		return await this.appWebClient.groups.create(name);
-	}
-
-	/**
-	 * Create a new private channel.
-	 *
-	 * @param {string} name - The name of the channel to create.
-	 *
-	 * @return {object}
-	 */
-	async openPrivateChannel(name)
-	{
-		return await this.appWebClient.groups.open(name);
+		return await this.appWebClient.groups.create({
+			name
+		});
 	}
 
 	/**
 	 * Invite a user to a private channel.
 	 *
 	* @param {string} channel - The ID of the private channel.
-	* @param {string} uid - The ID of the user to invite.
+	* @param {string} user - The ID of the user to invite.
 	*
 	* @return {object}
 	 */
-	async invitePrivateChannel(channel, uid)
+	async invitePrivateChannel(channel, user)
 	{
-		return await this.appWebClient.groups.invite(channel, uid);
+		return await this.appWebClient.groups.invite({
+			channel,
+			user
+		});
 	}
 
 	/**
@@ -156,7 +186,9 @@ class Slacksimple
 	 */
 	async leavePrivateChannel(channel)
 	{
-		return await this.appWebClient.groups.leave(channel);
+		return await this.appWebClient.groups.leave({
+			channel
+		});
 	}
 
 	/**
@@ -168,7 +200,9 @@ class Slacksimple
 	 */
 	async getConversationMembers(channel)
 	{
-		const response = await this.botWebClient.conversations.members(channel);
+		const response = await this.botWebClient.conversations.members({
+			channel
+		});
 		return response.members;
 	}
 
@@ -181,7 +215,9 @@ class Slacksimple
 	 */
 	async getConversationInfo(channel)
 	{
-		const response = await this.botWebClient.conversations.info(channel);
+		const response = await this.botWebClient.conversations.info({
+			channel
+		});
 		return response.channel;
 	}
 }
