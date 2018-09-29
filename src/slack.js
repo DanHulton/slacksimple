@@ -92,17 +92,17 @@ class Slacksimple
 	 *
 	 * @return {object}
 	 */
-	async dm(user, text, options)
+	async dm(user, text, options = {})
 	{
 		const response = await this.botWebClient.im.open({
 			user
 		});
 
-		return await this.postMessage({
-			channel: response.channel.id,
+		return this.postMessage(
+			response.channel.id,
 			text,
-			...options
-		});
+			options
+		);
 	}
 
 	/**
